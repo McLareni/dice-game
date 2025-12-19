@@ -3,9 +3,11 @@
 import { Alert } from "@mui/material";
 
 import useStore from "@/store";
+import { use } from "react";
 
 export default function AlertCustom() {
   const lastResult = useStore((state) => state.lastResult);
+  const condition = useStore((state) => state.condition);
 
   if (!lastResult) {
     return null;
@@ -20,14 +22,16 @@ export default function AlertCustom() {
         fontSize: "16px",
         color: "white",
         "& .MuiAlert-icon": {
-          color: "white", 
+          color: "white",
         },
       }}
     >
       {lastResult.success ? "You won" : "You lost"}
 
       {!lastResult.success && (
-        <p style={{ fontSize: "14px" }}>Number was higher</p>
+        <p style={{ fontSize: "14px" }}>
+          Number was {condition === "greater" ? "higher" : "lower"}
+        </p>
       )}
     </Alert>
   );
